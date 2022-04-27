@@ -1,5 +1,5 @@
 from src.net.db_detector import SegDetector
-from src.net.backbones.resnet import resnet50
+from src.net.backbones.resnet import resnet50,deformable_resnet50
 import cv2
 import torchvision.transforms as transforms
 import math
@@ -29,12 +29,11 @@ def main():
     res = db(resnet(f))
     # print(res)
     # print(res['binary'].shape)
-    map_b = transforms.ToPILImage()(res['binary'][0])
+    map_b = transforms.ToPILImage()(res['binary'][0]-1)
     map_t = transforms.ToPILImage()(res['thresh'][0])
     map_tb= transforms.ToPILImage()(res['thresh_binary'][0])
-    map_b_t = transforms.ToPILImage()(res['binary'][0]-res['thresh'][0])
     Image.open(img_path).show()
-    map_b_t.show()
+    map_b.show()
 
 
 
